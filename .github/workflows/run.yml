@@ -27,6 +27,6 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@master
-        - uses: ../
+        - uses: ./
         - name: Send greeting 3
           run: .github/workflows/aws/first.sh
