@@ -23,62 +23,9 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-
-
-  # This workflow contains a single job called "greet"
-  first:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send greeting
-        run: kubectl exec -it $(kubectl get pod -l app=ubuntu -o jsonpath='{.items[0].metadata.name}') -- bash < install.sh
-  second:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send greeting 2
-        run: kubectl exec -it $(kubectl get pod -l app=ubuntu -o jsonpath='{.items[0].metadata.name}') -- bash < ./install.sh
-  third:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send greeting 3
-        run: kubectl exec -it $(kubectl get pod -l app=ubuntu -o jsonpath='{.items[0].metadata.name}') -- bash < .github/workflows/install.sh
-  fourth:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Send greeting 3
-        run: kubectl exec -it $(kubectl get pod -l app=ubuntu -o jsonpath='{.items[0].metadata.name}') -- bash < .github/workflows/aws/install.sh
   fifth:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Send greeting 3
-        run: ./.github/workflows/aws/first.sh
-  first2:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Send greeting
-        run: .github/workflows/aws/first.sh
-  second2:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Send greeting 2
-        run: aws/first.sh
-  third2:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send greeting 3
-        run: ./aws/first.sh
-  fourth2:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Send greeting 3
-        run: ls
-  fifth2:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Send greeting 3
-        run: ls ..
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@master
+        - name: Send greeting 3
+          run: .github/workflows/aws/first.sh

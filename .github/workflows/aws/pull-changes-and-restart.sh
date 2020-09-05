@@ -1,2 +1,2 @@
-sh assets/aws/stop_all.sh
-sh assets/aws/start.sh
+sh .github/workflows/aws/stop_all.sh
+sh .github/workflows/aws/start.sh
