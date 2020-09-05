@@ -25,25 +25,20 @@ on:
 jobs:
   # This workflow contains a single job called "greet"
   first:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: sh .github/workflows/aws/first.sh
-
+      - name: Send greeting
+        run: sh .github/workflows/aws/first.sh
   second:
     runs-on: ubuntu-latest
     steps:
-    - name: Send greeting 2
-      run: sh aws/first.sh
+      - name: Send greeting 2
+        run: sh aws/first.sh
   third:
     runs-on: ubuntu-latest
     steps:
-    - name: Send greeting 3
-      run: sh ./aws/first.sh
+      - name: Send greeting 3
+        run: sh ./aws/first.sh
   fourth:
     runs-on: ubuntu-latest
     steps:
@@ -53,4 +48,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send greeting 3
-        run: sh ./.github/workflows/aws/first.sh
+        run: ./.github/workflows/aws/first.sh
+  first2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send greeting
+        run: .github/workflows/aws/first.sh
+  second2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send greeting 2
+        run: aws/first.sh
+  third2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send greeting 3
+        run: ./aws/first.sh
+  fourth2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send greeting 3
+        run: ./workflows/aws/first.sh
+  fifth2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send greeting 3
+        run: ./.github/workflows/aws/first.sh
