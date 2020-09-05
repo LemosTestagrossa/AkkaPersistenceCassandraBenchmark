@@ -44,21 +44,25 @@ jobs:
   fourth:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       - name: Send greeting 3
         run: kubectl exec -it $(kubectl get pod -l app=ubuntu -o jsonpath='{.items[0].metadata.name}') -- bash < .github/workflows/aws/install.sh
   fifth:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       - name: Send greeting 3
         run: ./.github/workflows/aws/first.sh
   first2:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       - name: Send greeting
         run: .github/workflows/aws/first.sh
   second2:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       - name: Send greeting 2
         run: aws/first.sh
   third2:
@@ -69,10 +73,12 @@ jobs:
   fourth2:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       - name: Send greeting 3
         run: ls
   fifth2:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       - name: Send greeting 3
         run: ls ..
