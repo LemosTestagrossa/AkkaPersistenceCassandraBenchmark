@@ -3,7 +3,7 @@
 name: Run
 
 env:
-  kube_confg_data: ${{ secrets.KUBE_CONFIG_DATA }}
+  KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
   aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
   aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   aws_region: ${{ secrets.AWS_DEFAULT_REGION }}
@@ -27,5 +27,6 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@master
+        - uses: wahyd4/kubectl-helm-action@master
         - name: Send greeting 3
           run: .github/workflows/aws/first.sh
