@@ -2,6 +2,11 @@
 
 name: Manual workflow
 
+env:
+  kube_confg_data: ${{ secrets.KUBE_CONFIG_DATA }}
+  aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  aws_region: ${{ secrets.AWS_DEFAULT_REGION }}
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
@@ -29,17 +34,33 @@ jobs:
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
 
+  getAll:
+    name: getAll
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: deploy to cluster
+        uses: qazz92/kubectl@1.0.3
+        with:
+          args: get all
+
+
   deploy:
     name: Deploy to cluster
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: deploy to cluster
-      uses: qazz92/kubectl@1.0.3
-      env:
-        kube_confg_data: ${{ secrets.KUBE_CONFIG_DATA }}
-        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws_region: ${{ secrets.AWS_DEFAULT_REGION }}
-      with:
-        args: get all
+      - uses: actions/checkout@master
+      - name: deploy to cluster
+        uses: qazz92/kubectl@1.0.3
+        with:
+          args: apply -f aws/admin
+
+  deploy2:
+    name: Deploy to cluster 2
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: deploy to cluster 2
+        uses: qazz92/kubectl@1.0.3
+        with:
+          args: apply -f .github/workflows/aws/admin
