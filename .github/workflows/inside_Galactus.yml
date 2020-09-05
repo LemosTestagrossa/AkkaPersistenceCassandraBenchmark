@@ -31,4 +31,4 @@ jobs:
       - name: deploy to cluster
         uses: qazz92/kubectl@1.0.3
         with:
-          args: kubectl exec -it $(kubectl get pod -l app=ubuntu -o jsonpath='{.items[0].metadata.name}') -- bash < .github/workflows/aws/install.sh
+          args: exec -it $(kubectl get pod -l app=ubuntu -o jsonpath='{.items[0].metadata.name}') -- bash < .github/workflows/aws/install.sh
