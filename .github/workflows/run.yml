@@ -44,3 +44,13 @@ jobs:
     steps:
     - name: Send greeting 3
       run: sh ./aws/first.sh
+  fourth:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send greeting 3
+        run: sh ./workflows/aws/first.sh
+  fifth:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send greeting 3
+        run: sh ./.github/workflows/aws/first.sh
