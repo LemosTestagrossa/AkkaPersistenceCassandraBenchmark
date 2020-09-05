@@ -33,3 +33,7 @@ jobs:
     # Runs a single command using the runners shell
     - name: Send greeting
       run: sh .github/workflows/aws/first.sh
+    - name: Send greeting 2
+      run: sh aws/first.sh
+    - name: Send greeting 3
+      run: sh ./aws/first.sh
