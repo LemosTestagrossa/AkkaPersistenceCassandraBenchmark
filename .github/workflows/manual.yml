@@ -28,3 +28,18 @@ jobs:
     # Runs a single command using the runners shell
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
+
+  deploy:
+    name: Deploy to cluster
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: deploy to cluster
+      uses: qazz92/kubectl@1.0.3
+      env:
+        kube_confg_data: ${{ secrets.KUBE_CONFIG_DATA }}
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_region: ${{ secrets.AWS_DEFAULT_REGION }}
+      with:
+        args: get all
