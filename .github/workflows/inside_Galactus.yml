@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: Run
+name: install
 
 env:
   KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
