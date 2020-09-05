@@ -23,6 +23,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+
+
   # This workflow contains a single job called "greet"
   first:
     runs-on: ubuntu-latest
@@ -68,9 +70,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send greeting 3
-        run: ./workflows/aws/first.sh
+        run: ls
   fifth2:
     runs-on: ubuntu-latest
     steps:
       - name: Send greeting 3
-        run: ./.github/workflows/aws/first.sh
+        run: ls ..
