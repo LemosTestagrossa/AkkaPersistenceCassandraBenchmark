@@ -4,6 +4,7 @@ tmux new-window  -n 'port forward Grafana'
 tmux send-keys -t 1 "\
       kubectl port-forward $(kubectl get pod -l app.kubernetes.io/name=grafana -o jsonpath="{.items[0].metadata.name}")  3000; \
  " Enter
+ kubectl exec -it $(kubectl get pod -l app=ubuntu -o jsonpath="{.items[0].metadata.name}") --
 
 tmux new-window  -n 'port forward akkaPod1' \;
 tmux send-keys -t 1 "

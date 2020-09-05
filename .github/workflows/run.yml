@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: Manual workflow
+name: Run
 
 env:
   kube_confg_data: ${{ secrets.KUBE_CONFIG_DATA }}
@@ -24,7 +24,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
-  greet:
+  first:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -32,26 +32,4 @@ jobs:
     steps:
     # Runs a single command using the runners shell
     - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
-
-  getAll:
-    name: getAll
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: deploy to cluster
-        uses: qazz92/kubectl@1.0.3
-        with:
-          args: get all
-
-
-  deploy:
-    name: Deploy to cluster
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: deploy to cluster
-        uses: qazz92/kubectl@1.0.3
-        with:
-          args: apply -f .github/workflows/aws/admin
-
+      run: sh .github/workflows/aws/first.sh
