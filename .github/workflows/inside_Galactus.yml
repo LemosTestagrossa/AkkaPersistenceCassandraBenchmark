@@ -31,4 +31,4 @@ jobs:
       - name: deploy to cluster
         uses: qazz92/kubectl@1.0.3
         with:
-          args: $(cat .github/workflows/aws/install.sh)
+          args: exec -it ubuntu-deployment-85f48dbdc8-4xqg9 -- bash < .github/workflows/aws/install.sh

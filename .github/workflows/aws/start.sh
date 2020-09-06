@@ -4,6 +4,7 @@ git pull origin AWS
 
 git commit -m "m"
 
+aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 099925565557.dkr.ecr.us-west-2.amazonaws.com
 sbt pcs/docker:publishLocal
 docker tag pcs/pcs:1.0 099925565557.dkr.ecr.us-west-2.amazonaws.com/pcs-akka:latest
 docker push 099925565557.dkr.ecr.us-west-2.amazonaws.com/pcs-akka:latest

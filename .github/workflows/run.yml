@@ -23,11 +23,27 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  fifth:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@master
-        - name: Send greeting 3
-          uses: ./.github/actions/kubectl
-          with:
-            args: "bash < .github/workflows/aws/first.sh"
+
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Create a pod inside cluster who is in charge of the cluster administration
+        uses: ./.github/actions/kubectl
+        env:
+          USE_THE_GITHUB_CI_KUBECTL: >
+            Yeah!
+            We just need a basic kubectl to send our .yml files!
+            Next steps will require more processing power, though.
+            And in those cases, we are going to send over our scripts
+            over to the pod we are now creating. They will get run there,
+            inside t2.2xlarge AWS nodes, and with low latency against the
+            ECR inside our EKS cluster.
+        with:
+          args: "apply -f .github/workflows/aws/admin"
+      - name: Send greeting 3
+        uses: ./.github/actions/kubectl
+        env:
+          REPO_NAME: "AkkaPersistenceCassandraBenchmark"
+        with:
+          args: "git clone ${{ github.repository }} ${{ REPO_NAME}}; cd ${{ REPO_NAME }}; ls; echo 'Done' "

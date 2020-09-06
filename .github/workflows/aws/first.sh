@@ -1,3 +1,2 @@
-echo "Inside first.sh, going to ls inside admin pod"
+sh .github/workflows/aws/get_inside_admin_pod.sh < .github/workflows/aws/install.sh
 
-ls
