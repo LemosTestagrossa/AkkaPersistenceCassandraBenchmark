@@ -55,19 +55,15 @@ kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/infrastructure/akka/t
 
 
 kubectl port-forward $(kubectl get pod -l app.kubernetes.io/name=grafana -o jsonpath="{.items[0].metadata.name}")  3000:3000 &
-GRAFANA_PORT_FORWARD=$!
 kubectl port-forward $(kubectl get pod -l app=pcs-cluster -o jsonpath='{.items[0].metadata.name}') 8081:8081 &
-AKKA_POD_1_PORT_FORWARD=$!
 kubectl port-forward $(kubectl get pod -l app=pcs-cluster -o jsonpath='{.items[1].metadata.name}') 8082:8081 &
-AKKA_POD_2_PORT_FORWARD=$!
 kubectl port-forward $(kubectl get pod -l app=pcs-cluster -o jsonpath='{.items[2].metadata.name}') 8082:8081 &
-AKKA_POD_3_PORT_FORWARD=$!
 sleep 5
 
 sh .github/workflows/aws/grafana.sh
 # sleep 600
 sh .github/workflows/aws/grafana_to_pdf/inform_collaborators.sh
-kill $GRAFANA_PORT_FORWARD
-kill $AKKA_POD_1_PORT_FORWARD
-kill $AKKA_POD_2_PORT_FORWARD
-kill $AKKA_POD_3_PORT_FORWARD
+fuser -k 3000/tcp
+fuser -k 8081/tcp
+fuser -k 8082/tcp
+fuser -k 8083/tcp
