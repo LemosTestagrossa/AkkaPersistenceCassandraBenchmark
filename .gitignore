@@ -2,6 +2,7 @@
 *.log
 
 .github/workflows/aws/grafana_to_pdf/node_modules
+.github/workflows/aws/grafana_to_pdf/node_modules/*
 .github/workflows/aws/grafana_to_pdf/output.pdf
 .github/workflows/aws/grafana_to_pdf/package-lock.json
 
