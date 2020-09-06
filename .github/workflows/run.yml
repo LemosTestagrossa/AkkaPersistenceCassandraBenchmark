@@ -29,4 +29,5 @@ jobs:
         - uses: actions/checkout@master
         - uses: ./.github/actions/kubectl
         - name: Send greeting 3
-          run: ls # "bash < .github/workflows/aws/first.sh"
+          with:
+            args: ls # "bash < .github/workflows/aws/first.sh"
