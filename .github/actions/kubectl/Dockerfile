@@ -9,5 +9,18 @@ RUN apk add --update \
 
 RUN pip install awscli
 
+
+set -xe
+
+sh -c "aws configure set aws_access_key_id ${aws_access_key_id}"
+sh -c "aws configure set aws_secret_access_key ${aws_secret_access_key}"
+sh -c "aws configure set region ${aws_region}"
+
+# Extract the base64 encoded config data and write this to the KUBECONFIG
+echo "$KUBE_CONFIG_DATA" | base64 --decode > $HOME/.kube/config/kube_config_cluster.yaml
+# export KUBECONFIG=/tmp/config
+
+
+
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
