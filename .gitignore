@@ -1,0 +1,39 @@
+*.class
+*.log
+
+.github/workflows/aws/grafana_to_pdf/node_modules
+.github/workflows/aws/grafana_to_pdf/output.pdf
+.github/workflows/aws/grafana_to_pdf/package-lock.json
+
+# sbt specific
+.cache
+.history
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+# IDEA
+.idea/
+# Metals
+\.metals/
+\.bloop/
+
+target
+
+.DS_Store
+
+*.pyc
+
+# archivos generados por procedimientos
+assets/docker-compose/dev-lite/cassandra/config/cassandra.yaml
+# archivos referenciados por la documentación
+assets/examples/DGR-COP-OBLIGACIONES-TRI.json
+
+./pulumi
