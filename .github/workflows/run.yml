@@ -41,6 +41,6 @@ jobs:
         with:
           args: "git clone https://github.com/${{ github.repository }} ${REPO_NAME}; cd ${REPO_NAME}; ls; echo 'Done' "
       - name: do the run
-          uses: ./.github/actions/kubectl
-          with:
-            args: "bash < .github/workflows/aws/first.sh"
+        uses: ./.github/actions/kubectl
+        with:
+          args: " bash < .github/workflow/aws/pull-changes-and-restart.sh"
