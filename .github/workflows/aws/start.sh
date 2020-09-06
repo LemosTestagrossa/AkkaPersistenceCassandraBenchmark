@@ -1,5 +1,6 @@
 
 
+cd AkkaPersistenceCassandraBenchmark
 
 git pull origin master
 
