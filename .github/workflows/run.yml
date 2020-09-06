@@ -31,14 +31,7 @@ jobs:
       - name: Create a pod inside cluster who is in charge of the cluster administration
         uses: ./.github/actions/kubectl
         env:
-          USE_THE_GITHUB_CI_KUBECTL: >
-            Yeah!
-            We just need a basic kubectl to send our .yml files!
-            Next steps will require more processing power, though.
-            And in those cases, we are going to send over our scripts
-            over to the pod we are now creating. They will get run there,
-            inside t2.2xlarge AWS nodes, and with low latency against the
-            ECR inside our EKS cluster.
+          USE_THE_GITHUB_CI_KUBECTL: "Yeah!"
         with:
           args: "apply -f .github/workflows/aws/admin"
       - name: Send greeting 3
