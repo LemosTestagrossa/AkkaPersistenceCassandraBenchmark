@@ -11,7 +11,7 @@ echo "$KUBE_CONFIG_DATA" | base64 --decode > /tmp/config
 export KUBECONFIG=/tmp/config
 
 
-if [!  -z "$USE_THE_GITHUB_CI_KUBECTL" ]
+if [ ! -z "$USE_THE_GITHUB_CI_KUBECTL" ]
 then
   sh -c "kubectl $*"
 else
