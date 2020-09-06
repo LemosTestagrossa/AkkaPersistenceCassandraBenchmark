@@ -11,7 +11,9 @@ echo "$KUBE_CONFIG_DATA" | base64 --decode > /tmp/config
 export KUBECONFIG=/tmp/config
 
 
-if [ -z "$USE_THE_GITHUB_CI_KUBECTL" ]  sh -c "kubectl $*"
+if [ -z "$USE_THE_GITHUB_CI_KUBECTL" ]
+then
+  sh -c "kubectl $*"
 else
   # else, we use the GITHUB_CI_KUBECTL, meaning, the kubectl provided by this docker image,
   # to run commands inside our cluster administration pod.
