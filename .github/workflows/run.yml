@@ -49,4 +49,4 @@ jobs:
       - name: do the run
         uses: ./.github/actions/kubectl
         with:
-          args: " bash < .github/workflows/aws/pull-changes-and-restart.sh"
+          args: " cd ${REPO_NAME}; bash < .github/workflows/aws/pull-changes-and-restart.sh"
