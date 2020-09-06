@@ -10,4 +10,6 @@ sh -c "aws configure set region ${aws_region}"
 echo "$KUBE_CONFIG_DATA" | base64 --decode > /tmp/config
 export KUBECONFIG=/tmp/config
 
+kubectl get all
+
 sh -c "$*"
