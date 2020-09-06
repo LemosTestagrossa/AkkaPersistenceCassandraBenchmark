@@ -1,8 +1,23 @@
 
 
+
 git pull origin master
 
 git commit -m "merge!"
+
+
+kubectl delete -f assets/k8s/infra/kafka.yml
+kubectl delete -f assets/k8s/infra/cassandra.yml
+
+
+kubectl delete -f assets/k8s/pcs/pcs-rbac.yml
+envsubst < assets/k8s/pcs/pcs-deployment.yml | kubectl delete -f -
+kubectl delete -f assets/k8s/pcs/pcs-service.yml
+kubectl delete -f assets/k8s/pcs/pcs-service-monitor.yml
+
+
+helm uninstall prometheus
+
 
 aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 099925565557.dkr.ecr.ap-northeast-2.amazonaws.com
 
