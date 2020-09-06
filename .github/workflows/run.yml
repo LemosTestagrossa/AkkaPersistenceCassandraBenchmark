@@ -27,7 +27,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@master
-        - uses: ./.github/actions/kubectl
         - name: Send greeting 3
+          uses: ./.github/actions/kubectl
           with:
             args: ls # "bash < .github/workflows/aws/first.sh"
