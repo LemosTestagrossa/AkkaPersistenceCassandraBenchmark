@@ -54,6 +54,10 @@ kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/infrastructure/akka/t
 kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/infrastructure/akka/tables/tag_write_progress.cql
 
 
+fuser -k 3000/tcp
+fuser -k 8081/tcp
+fuser -k 8082/tcp
+fuser -k 8083/tcp
 
 kubectl port-forward $(kubectl get pod -l app.kubernetes.io/name=grafana -o jsonpath="{.items[0].metadata.name}")  3000:3000 &
 kubectl port-forward $(kubectl get pod -l app=pcs-cluster -o jsonpath='{.items[0].metadata.name}') 8081:8081 &
