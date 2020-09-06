@@ -1,27 +1,16 @@
 
 
-apt-get update && apt-get install -y apt-transport-https
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-curl -sL https://deb.nodesource.com/setup_14.x | bash
-curl -s "https://get.sdkman.io" | bash
-
-echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
-apt-get update
-apt-get install -y kubectl kafkacat git curl unzip zip gettext-base nodejs
-
-
-
-source "$HOME/.sdkman/bin/sdkman-init.sh"
-sdkman_auto_answer=true
-sdk install sbt 
-sdk install java
-
-
-pip install awscli
-curl https://get.docker.com/ | sh
-service docker start
-
-
+# Install latest chrome dev package, which installs the necessary libs to
+# make the bundled version of Chromium that Puppeteer installs work.
+apt-get update \
+&& apt-get install -y wget --no-install-recommends \
+&& wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+&& sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
+&& apt-get update \
+&& apt-get install -y google-chrome-unstable --no-install-recommends \
+&& rm -rf /var/lib/apt/lists/* \
+&& wget --quiet https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh -O /usr/sbin/wait-for-it.sh \
+&& chmod +x /usr/sbin/wait-for-it.sh
 
 
 
