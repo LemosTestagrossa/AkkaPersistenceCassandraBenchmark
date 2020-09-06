@@ -1,16 +1,17 @@
 
 
-git pull origin AWS
+git pull origin master
 
-git commit -m "m"
+git commit -m "merge!"
 
-aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 099925565557.dkr.ecr.us-west-2.amazonaws.com
+aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 099925565557.dkr.ecr.ap-northeast-2.amazonaws.com
+
 sbt pcs/docker:publishLocal
-docker tag pcs/pcs:1.0 099925565557.dkr.ecr.us-west-2.amazonaws.com/pcs-akka:latest
-docker push 099925565557.dkr.ecr.us-west-2.amazonaws.com/pcs-akka:latest
-export IMAGE=099925565557.dkr.ecr.us-west-2.amazonaws.com/pcs-akka:latest
+# docker tag pcs/pcs:1.0 099925565557.dkr.ecr.us-west-2.amazonaws.com/pcs-akka:latest
+docker tag open-source:latest 099925565557.dkr.ecr.ap-northeast-2.amazonaws.com/open-source:latest
+docker push 099925565557.dkr.ecr.ap-northeast-2.amazonaws.com/open-source:latest
+export IMAGE=099925565557.dkr.ecr.ap-northeast-2.amazonaws.com/open-source:latest
 
-kubectl apply -f assets/k8s/infra/kafka.yml
 kubectl apply -f assets/k8s/infra/cassandra.yml
 
 
@@ -20,13 +21,6 @@ helm repo add stable https://kubernetes-charts.storage.googleapis.com
 helm install prometheus stable/prometheus-operator --namespace copernico
 
 
-sleep 60
-
-export kafkaPod=$(kubectl get pod -l "app=kafka" -o jsonpath='{.items[0].metadata.name}')
-export createSujetoTri='kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 20 --topic DGR-COP-SUJETO-TRI'
-kubectl exec $kafkaPod -- $createSujetoTri
-export createObligacionTri='kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 20 --topic DGR-COP-OBLIGACIONES-TRI'
-kubectl exec $kafkaPod -- $createObligacionTri
 
 export pod_name=$(kubectl get pod --selector app=cassandra | grep cassandra | cut -d' ' -f 1)
 
@@ -43,23 +37,22 @@ kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/infrastructure/akka/t
 kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/infrastructure/akka/tables/tag_views.cql
 kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/infrastructure/akka/tables/tag_write_progress.cql
 
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/infrastructure/cqrs/keyspaces/akka_projection.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/infrastructure/cqrs/tables/offset_store.cql
 
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/keyspaces/read_side.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_actividades_sujeto.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_contactos.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_declaraciones_juradas.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_domicilios_objeto.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_domicilios_sujeto.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_exenciones.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_juicios.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_obligaciones.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_planes_pago.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_subastas.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_sujeto.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_sujeto_objeto.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_tramites.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_etapas_procesales.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_param_plan.cql
-kubectl exec -i $pod_name cqlsh < assets/scripts/cassandra/domain/read_side/tables/buc_param_recargo.cql
+
+kubectl port-forward $(kubectl get pod -l app.kubernetes.io/name=grafana -o jsonpath="{.items[0].metadata.name}")  3000:3000 &
+GRAFANA_PORT_FORWARD=$!
+kubectl port-forward $(kubectl get pod -l app=pcs-cluster -o jsonpath='{.items[0].metadata.name}') 8081:8081 &
+AKKA_POD_1_PORT_FORWARD=$!
+kubectl port-forward $(kubectl get pod -l app=pcs-cluster -o jsonpath='{.items[1].metadata.name}') 8082:8081 &
+AKKA_POD_2_PORT_FORWARD=$!
+kubectl port-forward $(kubectl get pod -l app=pcs-cluster -o jsonpath='{.items[2].metadata.name}') 8082:8081 &
+AKKA_POD_3_PORT_FORWARD=$!
+sleep 5
+
+sh .github/workflows/aws/grafana.sh
+# sleep 600
+sh .github/workflows/aws/grafana_to_pdf/inform_collaborators.sh
+kill $GRAFANA_PORT_FORWARD
+kill $AKKA_POD_1_PORT_FORWARD
+kill $AKKA_POD_2_PORT_FORWARD
+kill $AKKA_POD_3_PORT_FORWARD

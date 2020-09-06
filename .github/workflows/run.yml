@@ -34,9 +34,13 @@ jobs:
           USE_THE_GITHUB_CI_KUBECTL: "Yeah!"
         with:
           args: "apply -f .github/workflows/aws/admin"
-      - name: Send greeting 3
+      - name: Clone our own repository inside the administration cluster
         uses: ./.github/actions/kubectl
         env:
           REPO_NAME: "AkkaPersistenceCassandraBenchmark"
         with:
           args: "git clone https://github.com/${{ github.repository }} ${REPO_NAME}; cd ${REPO_NAME}; ls; echo 'Done' "
+      - name: Run
+          uses: ./.github/actions/kubectl
+          with:
+            args: " bash < .github/workflow/aws/pull-changes-and-restart.sh"

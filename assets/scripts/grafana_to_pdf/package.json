@@ -1,0 +1,15 @@
+{
+  "name": "grafana_to_pdf",
+  "version": "1.0.0",
+  "main": "grafana_pdf.js",
+  "scripts": {
+    "inform_collaborators": "sh send_grafana_dashboard_as_pdf_via_email.sh"
+  },
+  "author": "",
+  "description": "",
+  "dependencies": {
+    "nodemailer": "6.4.11",
+    "nodemailer-markdown": "1.0.3",
+    "puppeteer": "5.2.1"
+  }
+}
