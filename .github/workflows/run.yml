@@ -43,4 +43,4 @@ jobs:
       - name: do the run
           uses: ./.github/actions/kubectl
           with:
-            args: "bash < .github/workflow/aws/pull-changes-and-restart.sh"
+            args: "bash < .github/workflows/aws/first.sh"
