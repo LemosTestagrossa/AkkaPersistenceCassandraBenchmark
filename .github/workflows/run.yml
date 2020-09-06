@@ -29,6 +29,5 @@ jobs:
         - uses: actions/checkout@master
         - uses: ./.github/actions/kubectl
         - name: Send greeting 3
-          run: |
-          cat ~/.kube/config
-          .github/workflows/aws/first.sh
+          run: cat ~/.kube/config
+          # .github/workflows/aws/first.sh
