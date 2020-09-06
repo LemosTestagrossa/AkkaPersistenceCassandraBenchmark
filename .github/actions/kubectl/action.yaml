@@ -1,6 +1,6 @@
 name: kubectl-eks
 description: "'kubectl' for eks"
-author: 'Rokhun Jung'
+author: 'Miguel Lemos'
 branding:
   icon: 'box'
   color: 'gray-dark'
