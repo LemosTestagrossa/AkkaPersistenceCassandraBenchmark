@@ -7,8 +7,8 @@ sh -c "aws configure set aws_secret_access_key ${aws_secret_access_key}"
 sh -c "aws configure set region ${aws_region}"
 
 # Extract the base64 encoded config data and write this to the KUBECONFIG
-echo "$KUBE_CONFIG_DATA" | base64 --decode > /tmp/config
-export KUBECONFIG=/tmp/config
+echo "$KUBE_CONFIG_DATA" | base64 --decode > $HOME/.kube/config/kube_config_cluster.yaml
+# export KUBECONFIG=/tmp/config
 
 kubectl get all
 
