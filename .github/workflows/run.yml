@@ -30,4 +30,4 @@ jobs:
         - name: Send greeting 3
           uses: ./.github/actions/kubectl
           with:
-            args: ls # "bash < .github/workflows/aws/first.sh"
+            args: "bash < .github/workflows/aws/first.sh"
