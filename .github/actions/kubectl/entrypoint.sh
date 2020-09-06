@@ -10,5 +10,5 @@ sh -c "aws configure set region ${aws_region}"
 echo "$KUBE_CONFIG_DATA" | base64 --decode > /tmp/config
 export KUBECONFIG=/tmp/config
 
-sh -c "kubectl exec -it $(kubectl get pod -l app=ubuntu -o jsonpath='{.items[0].metadata.name}') -- bash $*"
+sh -c "kubectl exec -i $(kubectl get pod -l app=ubuntu -o jsonpath='{.items[0].metadata.name}') -- $*"
 
