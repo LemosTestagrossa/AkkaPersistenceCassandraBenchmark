@@ -13,7 +13,7 @@ export KUBECONFIG=/tmp/config
 
 kubectl get all
 
-if [[ -z "${USE_THE_GITHUB_CI_KUBECTL}" ]]; then
+if [[ -v USE_THE_GITHUB_CI_KUBECTL ]]; then
   sh -c "kubectl $*"
 else
   # else, we use the GITHUB_CI_KUBECTL, meaning, the kubectl provided by this docker image,
